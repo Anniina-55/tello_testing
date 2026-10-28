@@ -90,6 +90,13 @@ class DjiTello:
             raise ValueError("Rotation must be 1–360 degrees")
         return self.send_command(f"ccw {degrees}")
 
+    # remote control with continuous commands
+    # only one command packet is sent -> periodic transmission and stop handling are missing!
+    # TODO: 
+    # - implement continuous RC control in a separate loop
+    # - resend RC commands periodically while control is active
+    # - send zero RC values when control stops or the loop exits
+    # - handle errors and ensure safe termination before flight testing!
     def send_rc(self, left_right, forward_back, up_down, yaw):
         """Send continuous RC control; do not wait for a reply."""
         values = [int(v) for v in
